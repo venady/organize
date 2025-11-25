@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Life Diary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* === VARIABEL WARNA YANG LEBIH KONTRAST === */
+        :root {
+            --burgundy: #6C0820;
+            --cherry-blossom: #F2AEBC;
+            --misty-rose: #F2DCDB;
+            --silver-lake: #3D5D91;
+            --lapis-lazuli: #2A3F6B;
+            --dark-text: #1A1A1A;
+            --light-text: #FFFFFF;
+        }
+
+        /* === GLOBAL STYLES === */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--misty-rose) 0%, #E8E8E8 100%);
+            color: var(--dark-text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--lapis-lazuli);
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* === HEADER === */
+        header {
+            background: var(--lapis-lazuli);
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 4px solid var(--burgundy);
+            box-shadow: 0 4px 20px rgba(42, 63, 107, 0.3);
+        }
+
+        .tagline {
+            color: var(--light-text);
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* === TAB NAVIGATION === */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: var(--light-text);
+            padding: 0;
+            margin: 30px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid var(--silver-lake);
+            box-shadow: 0 4px 15px rgba(61, 93, 145, 0.2);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 16px 20px;
+            background: var(--light-text);
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--lapis-lazuli);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            white-space: nowrap;
+            border-right: 1px solid #E0E0E0;
+        }
+
+        .tab-button:last-child {
+            border-right: none;
+        }
+
+        .tab-button:hover {
+            background: var(--cherry-blossom);
+            color: var(--burgundy);
+        }
+
+        .tab-button.active {
+            background: var(--silver-lake);
+            color: var(--light-text);
+            font-weight: 600;
+        }
+
+        /* === TAB CONTENT === */
+        .tab-content {
+            display: none;
+            padding: 35px;
+            background: var(--light-text);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            animation: fadeIn 0.4s ease;
+            border: 2px solid #E0E0E0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === KEUANGAN TAB === */
+        .finance-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .finance-card {
+            background: var(--light-text);
+            padding: 22px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid var(--silver-lake);
+            box-shadow: 0 3px 12px rgba(61, 93, 145, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .finance-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(61, 93, 145, 0.15);
+        }
+
+        .finance-card.income {
+            border-color: #28a745;
+        }
+
+        .finance-card.expense {
+            border-color: #dc3545;
+        }
+
+        .finance-card.balance {
+            border-color: var(--burgundy);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .stat-number.income {
+            color: #28a745;
+        }
+
+        .stat-number.expense {
+            color: #dc3545;
+        }
+
+        .stat-number.balance {
+            color: var(--burgundy);
+        }
+
+        /* Add Transaction Section */
+        .add-transaction-section {
+            background: linear-gradient(135deg, var(--misty-rose) 0%, var(--light-text) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--silver-lake);
+            margin-bottom: 25px;
+        }
+
+        .add-transaction-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            color: var(--lapis-lazuli);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            padding: 10px 12px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--silver-lake);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .add-transaction-btn {
+            background: var(--silver-lake);
+            color: var(--light-text);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-transaction-btn:hover {
+            background: var(--burgundy);
+            transform: translateY(-2px);
+        }
+
+        /* Transaction List */
+        .transactions-table-container {
+            background: var(--light-text);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .transactions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .transactions-table th {
+            background: var(--silver-lake);
+            color: var(--light-text);
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .transactions-table td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #E8E8E8;
+            vertical-align: middle;
+        }
+
+        .transactions-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .transactions-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .transaction-type {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .type-income {
+            background: #28a745;
+            color: white;
+        }
+
+        .type-expense {
+            background: #dc3545;
+            color: white;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .amount-income {
+            color: #28a745;
+        }
+
+        .amount-expense {
+            color: #dc3545;
+        }
+
+        .transaction-method {
+            background: var(--misty-rose);
+            color: var(--burgundy);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .delete-transaction-btn {
+            background: transparent;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .delete-transaction-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Payment Method Colors */
+        .method-tunai { background: #28a745; color: white; }
+        .method-gopay { background: #00AA13; color: white; }
+        .method-shopeepay { background: #EE2C24; color: white; }
+        .method-dana { background: #108EE9; color: white; }
+        .method-ovo { background: #4C2A8C; color: white; }
+        .method-bank { background: #6f42c1; color: white; }
+
+        /* === TUGAS TAB === */
+        .add-task-section {
+            background: linear-gradient(135deg, var(--misty-rose) 0%, var(--light-text) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--silver-lake);
+            margin-bottom: 25px;
+        }
+
+        .add-task-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .add-task-btn {
+            background: var(--silver-lake);
+            color: var(--light-text);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-task-btn:hover {
+            background: var(--burgundy);
+            transform: translateY(-2px);
+        }
+
+        .tasks-table-container {
+            background: var(--light-text);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .tasks-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tasks-table th {
+            background: var(--silver-lake);
+            color: var(--light-text);
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .tasks-table td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #E8E8E8;
+            vertical-align: top;
+        }
+
+        .tasks-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tasks-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .task-matkul {
+            font-weight: 600;
+            color: var(--lapis-lazuli);
+            min-width: 120px;
+        }
+
+        .task-deskripsi {
+            color: var(--dark-text);
+            line-height: 1.5;
+        }
+
+        .task-deadline {
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .deadline-date {
+            font-weight: 600;
+            color: var(--burgundy);
+            margin-bottom: 4px;
+        }
+
+        .deadline-days {
+            font-size: 0.8rem;
+            color: var(--silver-lake);
+            font-weight: 500;
+        }
+
+        .task-priority {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .priority-high {
+            background: var(--burgundy);
+            color: var(--light-text);
+        }
+
+        .priority-medium {
+            background: var(--silver-lake);
+            color: var(--light-text);
+        }
+
+        .priority-low {
+            background: var(--cherry-blossom);
+            color: var(--burgundy);
+        }
+
+        .delete-task-btn, .edit-task-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            margin: 0 2px;
+        }
+
+        .delete-task-btn {
+            color: #dc3545;
+        }
+
+        .delete-task-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        .edit-task-btn {
+            color: var(--silver-lake);
+        }
+
+        .edit-task-btn:hover {
+            background: var(--silver-lake);
+            color: white;
+        }
+
+        /* === KULIAH TAB === */
+        .courses-section {
+            background: linear-gradient(135deg, var(--misty-rose) 0%, var(--light-text) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--silver-lake);
+        }
+
+        .courses-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .course-card {
+            background: var(--light-text);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #E8E8E8;
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover {
+            border-color: var(--silver-lake);
+            box-shadow: 0 6px 20px rgba(61, 93, 145, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .course-info {
+            flex: 1;
+        }
+
+        .course-name {
+            font-weight: 600;
+            color: var(--lapis-lazuli);
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .course-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .course-detail {
+            background: var(--misty-rose);
+            color: var(--burgundy);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .course-sks {
+            background: var(--cherry-blossom);
+            color: var(--burgundy);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .course-content {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .schedule-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--silver-lake);
+        }
+
+        .schedule-time {
+            font-weight: 600;
+            color: var(--burgundy);
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .schedule-room {
+            font-size: 0.9rem;
+            color: var(--lapis-lazuli);
+        }
+
+        .modul-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--silver-lake);
+            color: var(--light-text);
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .modul-link:hover {
+            background: var(--burgundy);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 8, 32, 0.3);
+        }
+
+        /* === DASHBOARD TAB === */
+        .welcome-section {
+            text-align: center;
+            padding: 35px 30px;
+            background: linear-gradient(135deg, var(--silver-lake) 0%, var(--lapis-lazuli) 100%);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 2px solid var(--burgundy);
+        }
+
+        .student-name {
+            cursor: pointer;
+            border-bottom: 2px dashed var(--cherry-blossom);
+            padding: 4px 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--light-text);
+            font-weight: 600;
+        }
+
+        .student-name:hover {
+            background: var(--cherry-blossom);
+            color: var(--burgundy);
+        }
+
+        .student-name-input {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            border: 2px solid var(--cherry-blossom);
+            border-radius: 12px;
+            padding: 12px 20px;
+            text-align: center;
+            background: var(--light-text);
+            color: var(--burgundy);
+            width: 80%;
+            max-width: 320px;
+            box-shadow: 0 4px 12px rgba(108, 8, 32, 0.2);
+        }
+
+        .current-date {
+            font-size: 1.1rem;
+            color: var(--cherry-blossom);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: var(--light-text);
+            padding: 22px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid var(--silver-lake);
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 12px rgba(61, 93, 145, 0.1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--burgundy);
+            box-shadow: 0 6px 20px rgba(108, 8, 32, 0.15);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--burgundy);
+            margin-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* === SOSIAL TAB === */
+        .add-event-section {
+            background: linear-gradient(135deg, var(--misty-rose) 0%, var(--light-text) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--silver-lake);
+            margin-bottom: 25px;
+        }
+
+        .add-event-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .add-event-btn {
+            background: var(--silver-lake);
+            color: var(--light-text);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-event-btn:hover {
+            background: var(--burgundy);
+            transform: translateY(-2px);
+        }
+
+        .events-table-container {
+            background: var(--light-text);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .events-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .events-table th {
+            background: var(--silver-lake);
+            color: var(--light-text);
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .events-table td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #E8E8E8;
+            vertical-align: top;
+        }
+
+        .events-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .events-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .event-name {
+            font-weight: 600;
+            color: var(--lapis-lazuli);
+            min-width: 120px;
+        }
+
+        .event-description {
+            color: var(--dark-text);
+            line-height: 1.5;
+        }
+
+        .event-date {
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .event-date-display {
+            font-weight: 600;
+            color: var(--burgundy);
+            margin-bottom: 4px;
+        }
+
+        .event-days {
+            font-size: 0.8rem;
+            color: var(--silver-lake);
+            font-weight: 500;
+        }
+
+        .event-location {
+            min-width: 120px;
+        }
+
+        .event-type {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .type-academic {
+            background: var(--burgundy);
+            color: var(--light-text);
+        }
+
+        .type-social {
+            background: var(--silver-lake);
+            color: var(--light-text);
+        }
+
+        .type-sports {
+            background: var(--cherry-blossom);
+            color: var(--burgundy);
+        }
+
+        .type-cultural {
+            background: #6f42c1;
+            color: white;
+        }
+
+        .delete-event-btn, .edit-event-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            margin: 0 2px;
+        }
+
+        .delete-event-btn {
+            color: #dc3545;
+        }
+
+        .delete-event-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        .edit-event-btn {
+            color: var(--silver-lake);
+        }
+
+        .edit-event-btn:hover {
+            background: var(--silver-lake);
+            color: white;
+        }
+
+        /* === FOOTER === */
+        footer {
+            background: var(--lapis-lazuli);
+            color: var(--light-text);
+            text-align: center;
+            padding: 22px;
+            margin-top: 40px;
+            border-top: 4px solid var(--burgundy);
+        }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                border-radius: 12px;
+                max-width: 100%;
+            }
+            
+            .tab-button {
+                padding: 16px;
+                font-size: 1rem;
+                border-right: none;
+                border-bottom: 1px solid #E0E0E0;
+            }
+            
+            .tab-button:last-child {
+                border-bottom: none;
+            }
+            
+            .tab-content {
+                padding: 25px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .welcome-section {
+                padding: 25px 20px;
+            }
+            
+            .course-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .course-sks {
+                align-self: flex-start;
+            }
+            
+            .course-content {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            /* Responsive tables */
+            .tasks-table-container,
+            .transactions-table-container,
+            .events-table-container {
+                overflow-x: auto;
+            }
+            
+            .tasks-table,
+            .transactions-table,
+            .events-table {
+                min-width: 600px;
+            }
+            
+            .add-task-form,
+            .add-transaction-form,
+            .add-event-form {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .finance-summary {
+                grid-template-columns: 1fr;
+            }
+            
+            .student-name-input {
+                font-size: 2rem;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <p class="tagline">Manage your student life with style! 🎓</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('dashboard')">📊 Dashboard</button>
+            <button class="tab-button" onclick="openTab('kuliah')">🎓 Kuliah</button>
+            <button class="tab-button" onclick="openTab('tasks')">📚 Tugas</button>
+            <button class="tab-button" onclick="openTab('finance')">💵 Keuangan</button>
+            <button class="tab-button" onclick="openTab('social')">🎉 Sosial</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="welcome-section">
+                <h2>
+                    <span id="name-display" class="student-name" onclick="editName()">Mahasiswa</span>
+                    <span>! 👋</span>
+                </h2>
+                <p>Semangat menjalani hari ini!</p>
+                <div class="current-date" id="current-date"></div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="urgent-tasks">3</div>
+                    <div>Tugas Mendesak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div>Kelas Hari Ini</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-balance">Rp 0</div>
+                    <div>Saldo Saat Ini</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="upcoming-events">2</div>
+                    <div>Event Mendatang</div>
+                </div>
+            </div>
+
+            <h3>Quick Actions</h3>
+            <div class="stats-grid">
+                <div class="stat-card" style="cursor: pointer;" onclick="openTab('tasks')">
+                    <div class="stat-number">📝</div>
+                    <div>Lihat Tugas</div>
+                </div>
+                <div class="stat-card" style="cursor: pointer;" onclick="openTab('finance')">
+                    <div class="stat-number">💸</div>
+                    <div>Catat Transaksi</div>
+                </div>
+                <div class="stat-card" style="cursor: pointer;" onclick="openTab('kuliah')">
+                    <div class="stat-number">🎓</div>
+                    <div>Lihat Jadwal</div>
+                </div>
+                <div class="stat-card" style="cursor: pointer;" onclick="openTab('social')">
+                    <div class="stat-number">🎉</div>
+                    <div>Tambah Event</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kuliah Tab -->
+        <div id="kuliah" class="tab-content">
+            <div class="courses-section">
+                <h2>🎓 Mata Kuliah</h2>
+                <div class="courses-grid">
+                    <!-- Pemrograman Web -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="course-info">
+                                <div class="course-name">Pemrograman Web</div>
+                                <div class="course-details">
+                                    <span class="course-detail">Senin</span>
+                                    <span class="course-detail">Lab. Komputer A</span>
+                                </div>
+                            </div>
+                            <div class="course-sks">3 SKS</div>
+                        </div>
+                        <div class="course-content">
+                            <div class="schedule-info">
+                                <div class="schedule-time">🕐 08:00 - 10:00</div>
+                                <div class="schedule-room">📍 Lab. Komputer A</div>
+                            </div>
+                            <a href="#" class="modul-link" target="_blank">
+                                📖 Buka Modul
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Basis Data -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="course-info">
+                                <div class="course-name">Basis Data</div>
+                                <div class="course-details">
+                                    <span class="course-detail">Senin</span>
+                                    <span class="course-detail">Ruang 301</span>
+                                </div>
+                            </div>
+                            <div class="course-sks">3 SKS</div>
+                        </div>
+                        <div class="course-content">
+                            <div class="schedule-info">
+                                <div class="schedule-time">🕐 13:00 - 15:00</div>
+                                <div class="schedule-room">📍 Ruang 301</div>
+                            </div>
+                            <a href="#" class="modul-link" target="_blank">
+                                📖 Buka Modul
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Matematika Diskrit -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="course-info">
+                                <div class="course-name">Matematika Diskrit</div>
+                                <div class="course-details">
+                                    <span class="course-detail">Selasa</span>
+                                    <span class="course-detail">Ruang 201</span>
+                                </div>
+                            </div>
+                            <div class="course-sks">3 SKS</div>
+                        </div>
+                        <div class="course-content">
+                            <div class="schedule-info">
+                                <div class="schedule-time">🕐 09:00 - 11:00</div>
+                                <div class="schedule-room">📍 Ruang 201</div>
+                            </div>
+                            <a href="#" class="modul-link" target="_blank">
+                                📖 Buka Modul
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Struktur Data -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="course-info">
+                                <div class="course-name">Struktur Data</div>
+                                <div class="course-details">
+                                    <span class="course-detail">Rabu</span>
+                                    <span class="course-detail">Lab. Komputer B</span>
+                                </div>
+                            </div>
+                            <div class="course-sks">3 SKS</div>
+                        </div>
+                        <div class="course-content">
+                            <div class="schedule-info">
+                                <div class="schedule-time">🕐 10:00 - 12:00</div>
+                                <div class="schedule-room">📍 Lab. Komputer B</div>
+                            </div>
+                            <a href="#" class="modul-link" target="_blank">
+                                📖 Buka Modul
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Jaringan Komputer -->
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="course-info">
+                                <div class="course-name">Jaringan Komputer</div>
+                                <div class="course-details">
+                                    <span class="course-detail">Rabu</span>
+                                    <span class="course-detail">Ruang 402</span>
+                                </div>
+                            </div>
+                            <div class="course-sks">3 SKS</div>
+                        </div>
+                        <div class="course-content">
+                            <div class="schedule-info">
+                                <div class="schedule-time">🕐 14:00 - 16:00</div>
+                                <div class="schedule-room">📍 Ruang 402</div>
+                            </div>
+                            <a href="#" class="modul-link" target="_blank">
+                                📖 Buka Modul
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tugas & Deadline Tab -->
+        <div id="tasks" class="tab-content">
+            <h2>📚 Daftar Tugas & Deadline</h2>
+            
+            <!-- Form Tambah Tugas -->
+            <div class="add-task-section">
+                <h3>➕ Tambah Tugas Baru</h3>
+                <div class="add-task-form">
+                    <div class="form-group">
+                        <label class="form-label">Mata Kuliah</label>
+                        <input type="text" class="form-input" id="new-task-matkul" placeholder="Nama mata kuliah">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Deskripsi Tugas</label>
+                        <input type="text" class="form-input" id="new-task-deskripsi" placeholder="Deskripsi tugas">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Deadline</label>
+                        <input type="date" class="form-input" id="new-task-deadline">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Prioritas</label>
+                        <select class="form-select" id="new-task-priority">
+                            <option value="high">Tinggi</option>
+                            <option value="medium" selected>Sedang</option>
+                            <option value="low">Rendah</option>
+                        </select>
+                    </div>
+                    <button class="add-task-btn" onclick="addNewTask()">Tambah</button>
+                </div>
+            </div>
+
+            <!-- Tabel Tugas -->
+            <div class="tasks-table-container">
+                <table class="tasks-table">
+                    <thead>
+                        <tr>
+                            <th>Mata Kuliah</th>
+                            <th>Deskripsi Tugas</th>
+                            <th>Deadline</th>
+                            <th>Prioritas</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasks-table-body">
+                        <!-- Tugas akan di-generate oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Keuangan Tab -->
+        <div id="finance" class="tab-content">
+            <h2>💵 Tracking Keuangan</h2>
+            
+            <!-- Summary Cards -->
+            <div class="finance-summary">
+                <div class="finance-card income">
+                    <div class="stat-number income" id="total-income">Rp 0</div>
+                    <div>Total Pemasukan</div>
+                </div>
+                <div class="finance-card expense">
+                    <div class="stat-number expense" id="total-expense">Rp 0</div>
+                    <div>Total Pengeluaran</div>
+                </div>
+                <div class="finance-card balance">
+                    <div class="stat-number balance" id="current-balance">Rp 0</div>
+                    <div>Saldo Saat Ini</div>
+                </div>
+            </div>
+
+            <!-- Form Tambah Transaksi -->
+            <div class="add-transaction-section">
+                <h3>➕ Tambah Transaksi</h3>
+                <div class="add-transaction-form">
+                    <div class="form-group">
+                        <label class="form-label">Jenis</label>
+                        <select class="form-select" id="transaction-type">
+                            <option value="income">Pemasukan</option>
+                            <option value="expense">Pengeluaran</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Keterangan</label>
+                        <input type="text" class="form-input" id="transaction-desc" placeholder="Deskripsi transaksi">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Jumlah</label>
+                        <input type="number" class="form-input" id="transaction-amount" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Metode</label>
+                        <select class="form-select" id="transaction-method">
+                            <option value="tunai">Tunai</option>
+                            <option value="gopay">GoPay</option>
+                            <option value="shopeepay">ShopeePay</option>
+                            <option value="dana">DANA</option>
+                            <option value="ovo">OVO</option>
+                            <option value="bank">Bank Transfer</option>
+                        </select>
+                    </div>
+                    <button class="add-transaction-btn" onclick="addNewTransaction()">Tambah</button>
+                </div>
+            </div>
+
+            <!-- Tabel Transaksi -->
+            <div class="transactions-table-container">
+                <table class="transactions-table">
+                    <thead>
+                        <tr>
+                            <th>Jenis</th>
+                            <th>Keterangan</th>
+                            <th>Jumlah</th>
+                            <th>Metode</th>
+                            <th>Tanggal</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-table-body">
+                        <!-- Transaksi akan di-generate oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Sosial Tab -->
+        <div id="social" class="tab-content">
+            <h2>🎉 Aktivitas Sosial & Event</h2>
+            
+            <!-- Form Tambah Event -->
+            <div class="add-event-section">
+                <h3>➕ Tambah Event Baru</h3>
+                <div class="add-event-form">
+                    <div class="form-group">
+                        <label class="form-label">Nama Event</label>
+                        <input type="text" class="form-input" id="new-event-name" placeholder="Nama event">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Deskripsi</label>
+                        <textarea class="form-textarea" id="new-event-description" placeholder="Deskripsi event"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tanggal</label>
+                        <input type="date" class="form-input" id="new-event-date">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Lokasi</label>
+                        <input type="text" class="form-input" id="new-event-location" placeholder="Tempat event">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Jenis Event</label>
+                        <select class="form-select" id="new-event-type">
+                            <option value="academic">Akademik</option>
+                            <option value="social">Sosial</option>
+                            <option value="sports">Olahraga</option>
+                            <option value="cultural">Budaya</option>
+                        </select>
+                    </div>
+                    <button class="add-event-btn" onclick="addNewEvent()">Tambah</button>
+                </div>
+            </div>
+
+            <!-- Tabel Event -->
+            <div class="events-table-container">
+                <table class="events-table">
+                    <thead>
+                        <tr>
+                            <th>Nama Event</th>
+                            <th>Deskripsi</th>
+                            <th>Tanggal</th>
+                            <th>Lokasi</th>
+                            <th>Jenis</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="events-table-body">
+                        <!-- Event akan di-generate oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Campus Life Diary. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // === DATA STORAGE ===
+        let studentData = {
+            name: "Mahasiswa",
+            tasks: [],
+            transactions: [],
+            courses: [],
+            events: []
+        };
+
+        // === INITIALIZATION ===
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            updateDashboard();
+            updateTasksTable();
+            updateFinanceSummary();
+            updateCurrentDate();
+            updateTransactionsTable();
+            updateEventsTable();
+        });
+
+        // === DATA MANAGEMENT ===
+        function loadData() {
+            const saved = localStorage.getItem('campusLifeData');
+            if (saved) {
+                studentData = JSON.parse(saved);
+            }
+            initializeSampleData();
+        }
+
+        function saveData() {
+            localStorage.setItem('campusLifeData', JSON.stringify(studentData));
+            updateDashboard();
+        }
+
+        // === TAB NAVIGATION ===
+        function openTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+
+            // Remove active class from all tab buttons
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            // Show the specific tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to the button that opened the tab
+            event.currentTarget.classList.add('active');
+        }
+
+        // === DASHBOARD FUNCTIONS ===
+        function updateDashboard() {
+            document.getElementById('name-display').textContent = studentData.name;
+            
+            // Update urgent tasks count
+            const urgentTasks = studentData.tasks.filter(task => 
+                task.priority === 'high' && 
+                new Date(task.deadline) <= new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
+            );
+            document.getElementById('urgent-tasks').textContent = urgentTasks.length;
+
+            // Update upcoming events count
+            const upcomingEvents = studentData.events.filter(event => 
+                new Date(event.date) >= new Date()
+            );
+            document.getElementById('upcoming-events').textContent = upcomingEvents.length;
+
+            // Update balance
+            updateFinanceSummary();
+        }
+
+        function editName() {
+            const currentName = document.getElementById('name-display');
+            const newName = prompt('Masukkan nama Anda:', studentData.name);
+            
+            if (newName && newName.trim() !== '') {
+                studentData.name = newName.trim();
+                currentName.textContent = studentData.name;
+                saveData();
+            }
+        }
+
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            document.getElementById('current-date').textContent = 
+                now.toLocaleDateString('id-ID', options);
+        }
+
+        // === TASKS MANAGEMENT ===
+        function addNewTask() {
+            const matkul = document.getElementById('new-task-matkul').value;
+            const deskripsi = document.getElementById('new-task-deskripsi').value;
+            const deadline = document.getElementById('new-task-deadline').value;
+            const priority = document.getElementById('new-task-priority').value;
+
+            if (!matkul || !deskripsi || !deadline) {
+                alert('Harap isi semua field!');
+                return;
+            }
+
+            const newTask = {
+                id: Date.now(),
+                matkul: matkul,
+                deskripsi: deskripsi,
+                deadline: deadline,
+                priority: priority,
+                completed: false
+            };
+
+            studentData.tasks.push(newTask);
+            saveData();
+            updateTasksTable();
+            
+            // Reset form
+            document.getElementById('new-task-matkul').value = '';
+            document.getElementById('new-task-deskripsi').value = '';
+            document.getElementById('new-task-deadline').value = '';
+            document.getElementById('new-task-priority').value = 'medium';
+        }
+
+        function updateTasksTable() {
+            const tbody = document.getElementById('tasks-table-body');
+            tbody.innerHTML = '';
+
+            // Sort tasks by deadline and priority
+            studentData.tasks.sort((a, b) => {
+                if (a.priority === 'high' && b.priority !== 'high') return -1;
+                if (a.priority !== 'high' && b.priority === 'high') return 1;
+                return new Date(a.deadline) - new Date(b.deadline);
+            });
+
+            studentData.tasks.forEach(task => {
+                const row = document.createElement('tr');
+                
+                const daysLeft = calculateDaysLeft(task.deadline);
+                const daysText = daysLeft === 0 ? 'Hari ini' : 
+                               daysLeft === 1 ? 'Besok' : 
+                               daysLeft > 0 ? `${daysLeft} hari lagi` : 
+                               `${Math.abs(daysLeft)} hari terlambat`;
+
+                row.innerHTML = `
+                    <td class="task-matkul">${task.matkul}</td>
+                    <td class="task-deskripsi">${task.deskripsi}</td>
+                    <td class="task-deadline">
+                        <div class="deadline-date">${formatDate(task.deadline)}</div>
+                        <div class="deadline-days ${daysLeft <= 2 ? 'priority-high' : ''}">${daysText}</div>
+                    </td>
+                    <td>
+                        <span class="task-priority priority-${task.priority}">
+                            ${getPriorityText(task.priority)}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="edit-task-btn" onclick="editTask(${task.id})" title="Edit tugas">
+                            ✏️
+                        </button>
+                        <button class="delete-task-btn" onclick="deleteTask(${task.id})" title="Hapus tugas">
+                            🗑️
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function editTask(taskId) {
+            const task = studentData.tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            const newMatkul = prompt('Edit mata kuliah:', task.matkul);
+            const newDeskripsi = prompt('Edit deskripsi tugas:', task.deskripsi);
+            const newDeadline = prompt('Edit deadline (YYYY-MM-DD):', task.deadline);
+            const newPriority = prompt('Edit prioritas (high/medium/low):', task.priority);
+
+            if (newMatkul !== null) task.matkul = newMatkul;
+            if (newDeskripsi !== null) task.deskripsi = newDeskripsi;
+            if (newDeadline !== null) task.deadline = newDeadline;
+            if (newPriority !== null && ['high', 'medium', 'low'].includes(newPriority)) {
+                task.priority = newPriority;
+            }
+
+            saveData();
+            updateTasksTable();
+        }
+
+        function deleteTask(taskId) {
+            if (confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
+                studentData.tasks = studentData.tasks.filter(task => task.id !== taskId);
+                saveData();
+                updateTasksTable();
+            }
+        }
+
+        // === FINANCE MANAGEMENT ===
+        function addNewTransaction() {
+            const type = document.getElementById('transaction-type').value;
+            const desc = document.getElementById('transaction-desc').value;
+            const amount = parseInt(document.getElementById('transaction-amount').value);
+            const method = document.getElementById('transaction-method').value;
+
+            if (!desc || !amount || amount <= 0) {
+                alert('Harap isi keterangan dan jumlah dengan benar!');
+                return;
+            }
+
+            const newTransaction = {
+                id: Date.now(),
+                type: type,
+                description: desc,
+                amount: amount,
+                method: method,
+                date: new Date().toISOString().split('T')[0]
+            };
+
+            studentData.transactions.push(newTransaction);
+            saveData();
+            updateFinanceSummary();
+            updateTransactionsTable();
+            
+            // Reset form
+            document.getElementById('transaction-desc').value = '';
+            document.getElementById('transaction-amount').value = '';
+        }
+
+        function updateFinanceSummary() {
+            const income = studentData.transactions
+                .filter(t => t.type === 'income')
+                .reduce((sum, t) => sum + t.amount, 0);
+                
+            const expense = studentData.transactions
+                .filter(t => t.type === 'expense')
+                .reduce((sum, t) => sum + t.amount, 0);
+                
+            const balance = income - expense;
+
+            document.getElementById('total-income').textContent = formatCurrency(income);
+            document.getElementById('total-expense').textContent = formatCurrency(expense);
+            document.getElementById('current-balance').textContent = formatCurrency(balance);
+            document.getElementById('total-balance').textContent = formatCurrency(balance);
+        }
+
+        function updateTransactionsTable() {
+            const tbody = document.getElementById('transactions-table-body');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+
+            // Sort transactions by date (newest first)
+            studentData.transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            studentData.transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>
+                        <span class="transaction-type type-${transaction.type}">
+                            ${transaction.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}
+                        </span>
+                    </td>
+                    <td>${transaction.description}</td>
+                    <td class="transaction-amount amount-${transaction.type}">
+                        ${transaction.type === 'income' ? '+' : '-'}${formatCurrency(transaction.amount)}
+                    </td>
+                    <td>
+                        <span class="transaction-method method-${transaction.method}">
+                            ${getMethodText(transaction.method)}
+                        </span>
+                    </td>
+                    <td>${formatDate(transaction.date)}</td>
+                    <td>
+                        <button class="delete-transaction-btn" onclick="deleteTransaction(${transaction.id})" title="Hapus transaksi">
+                            🗑️
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function deleteTransaction(transactionId) {
+            if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
+                studentData.transactions = studentData.transactions.filter(t => t.id !== transactionId);
+                saveData();
+                updateFinanceSummary();
+                updateTransactionsTable();
+            }
+        }
+
+        // === EVENT MANAGEMENT ===
+        function addNewEvent() {
+            const name = document.getElementById('new-event-name').value;
+            const description = document.getElementById('new-event-description').value;
+            const date = document.getElementById('new-event-date').value;
+            const location = document.getElementById('new-event-location').value;
+            const type = document.getElementById('new-event-type').value;
+
+            if (!name || !description || !date || !location) {
+                alert('Harap isi semua field!');
+                return;
+            }
+
+            const newEvent = {
+                id: Date.now(),
+                name: name,
+                description: description,
+                date: date,
+                location: location,
+                type: type
+            };
+
+            studentData.events.push(newEvent);
+            saveData();
+            updateEventsTable();
+            updateDashboard();
+            
+            // Reset form
+            document.getElementById('new-event-name').value = '';
+            document.getElementById('new-event-description').value = '';
+            document.getElementById('new-event-date').value = '';
+            document.getElementById('new-event-location').value = '';
+            document.getElementById('new-event-type').value = 'academic';
+        }
+
+        function updateEventsTable() {
+            const tbody = document.getElementById('events-table-body');
+            tbody.innerHTML = '';
+
+            // Sort events by date (soonest first)
+            studentData.events.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            studentData.events.forEach(event => {
+                const row = document.createElement('tr');
+                
+                const daysLeft = calculateDaysLeft(event.date);
+                const daysText = daysLeft === 0 ? 'Hari ini' : 
+                               daysLeft === 1 ? 'Besok' : 
+                               daysLeft > 0 ? `${daysLeft} hari lagi` : 
+                               'Sudah lewat';
+
+                row.innerHTML = `
+                    <td class="event-name">${event.name}</td>
+                    <td class="event-description">${event.description}</td>
+                    <td class="event-date">
+                        <div class="event-date-display">${formatDate(event.date)}</div>
+                        <div class="event-days ${daysLeft <= 2 ? 'priority-high' : ''}">${daysText}</div>
+                    </td>
+                    <td class="event-location">${event.location}</td>
+                    <td>
+                        <span class="event-type type-${event.type}">
+                            ${getEventTypeText(event.type)}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="edit-event-btn" onclick="editEvent(${event.id})" title="Edit event">
+                            ✏️
+                        </button>
+                        <button class="delete-event-btn" onclick="deleteEvent(${event.id})" title="Hapus event">
+                            🗑️
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function editEvent(eventId) {
+            const event = studentData.events.find(e => e.id === eventId);
+            if (!event) return;
+
+            const newName = prompt('Edit nama event:', event.name);
+            const newDescription = prompt('Edit deskripsi event:', event.description);
+            const newDate = prompt('Edit tanggal (YYYY-MM-DD):', event.date);
+            const newLocation = prompt('Edit lokasi:', event.location);
+            const newType = prompt('Edit jenis event (academic/social/sports/cultural):', event.type);
+
+            if (newName !== null) event.name = newName;
+            if (newDescription !== null) event.description = newDescription;
+            if (newDate !== null) event.date = newDate;
+            if (newLocation !== null) event.location = newLocation;
+            if (newType !== null && ['academic', 'social', 'sports', 'cultural'].includes(newType)) {
+                event.type = newType;
+            }
+
+            saveData();
+            updateEventsTable();
+            updateDashboard();
+        }
+
+        function deleteEvent(eventId) {
+            if (confirm('Apakah Anda yakin ingin menghapus event ini?')) {
+                studentData.events = studentData.events.filter(event => event.id !== eventId);
+                saveData();
+                updateEventsTable();
+                updateDashboard();
+            }
+        }
+
+        // === HELPER FUNCTIONS ===
+        function calculateDaysLeft(dateString) {
+            const today = new Date();
+            const targetDate = new Date(dateString);
+            const diffTime = targetDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        function formatCurrency(amount) {
+            return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        function getPriorityText(priority) {
+            const priorities = {
+                'high': 'Tinggi',
+                'medium': 'Sedang',
+                'low': 'Rendah'
+            };
+            return priorities[priority];
+        }
+
+        function getMethodText(method) {
+            const methods = {
+                'tunai': 'Tunai',
+                'gopay': 'GoPay',
+                'shopeepay': 'ShopeePay',
+                'dana': 'DANA',
+                'ovo': 'OVO',
+                'bank': 'Bank Transfer'
+            };
+            return methods[method];
+        }
+
+        function getEventTypeText(type) {
+            const types = {
+                'academic': 'Akademik',
+                'social': 'Sosial',
+                'sports': 'Olahraga',
+                'cultural': 'Budaya'
+            };
+            return types[type];
+        }
+
+        // === SAMPLE DATA INITIALIZATION ===
+        function initializeSampleData() {
+            if (studentData.tasks.length === 0) {
+                studentData.tasks = [
+                    {
+                        id: 1,
+                        matkul: "Pemrograman Web",
+                        deskripsi: "Buat website portfolio menggunakan HTML, CSS, JavaScript",
+                        deadline: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                        priority: "high",
+                        completed: false
+                    },
+                    {
+                        id: 2,
+                        matkul: "Basis Data",
+                        deskripsi: "Desain database untuk sistem perpustakaan",
+                        deadline: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                        priority: "medium",
+                        completed: false
+                    },
+                    {
+                        id: 3,
+                        matkul: "Matematika Diskrit",
+                        deskripsi: "Kerjakan soal latihan bab 5 dan 6",
+                        deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                        priority: "low",
+                        completed: false
+                    }
+                ];
+            }
+
+            if (studentData.transactions.length === 0) {
+                studentData.transactions = [
+                    {
+                        id: 1,
+                        type: "income",
+                        description: "Uang saku dari orang tua",
+                        amount: 1500000,
+                        method: "bank",
+                        date: new Date().toISOString().split('T')[0]
+                    },
+                    {
+                        id: 2,
+                        type: "expense",
+                        description: "Makan siang",
+                        amount: 25000,
+                        method: "gopay",
+                        date: new Date().toISOString().split('T')[0]
+                    },
+                    {
+                        id: 3,
+                        type: "expense",
+                        description: "Buku referensi kuliah",
+                        amount: 120000,
+                        method: "tunai",
+                        date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+                    }
+                ];
+            }
+
+            if (studentData.events.length === 0) {
+                studentData.events = [
+                    {
+                        id: 1,
+                        name: "Tech Conference 2023",
+                        description: "Konferensi teknologi terbesar tahun ini dengan pembicara dari perusahaan ternama",
+                        date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                        location: "Auditorium Kampus",
+                        type: "academic"
+                    },
+                    {
+                        id: 2,
+                        name: "Charity Run",
+                        description: "Lari amal untuk mengumpulkan dana bagi anak-anak kurang mampu",
+                        date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                        location: "Lapangan Kampus",
+                        type: "social"
+                    },
+                    {
+                        id: 3,
+                        name: "Natal Bersama",
+                        description: "Perayaan natal bersama komunitas kampus dengan berbagai kegiatan seru",
+                        date: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                        location: "Aula Student Center",
+                        type: "cultural"
+                    }
+                ];
+            }
+
+            saveData();
+            updateTasksTable();
+            updateFinanceSummary();
+            updateTransactionsTable();
+            updateEventsTable();
+        }
+    </script>
+</body>
+</html>
